@@ -322,6 +322,65 @@ function Home() {
         </div>
       </section>
 
+      {/* Premium Tier Section */}
+      <section className="bg-white px-4 py-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center">
+            <span className="inline-block rounded-full bg-amber-100 px-4 py-1.5 text-sm font-semibold text-amber-700">
+              Premium
+            </span>
+            <h2 className="mt-4 text-balance text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Go premium for unlimited planning
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-gray-600">
+              Unlock unlimited trip plans, priority support, group booking features, and more.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-md">
+            <div className="rounded-2xl border-2 border-amber-200 bg-gradient-to-b from-amber-50 to-white p-8 shadow-lg">
+              <div className="text-center">
+                <span className="inline-block rounded-full bg-amber-200 px-3 py-1 text-xs font-bold uppercase tracking-wider text-amber-800">
+                  Best Value
+                </span>
+                <h3 className="mt-4 text-2xl font-bold text-gray-900">Premium</h3>
+                <div className="mt-2">
+                  <span className="text-4xl font-extrabold text-gray-900">$9.99</span>
+                  <span className="text-gray-500">/month</span>
+                </div>
+                <ul className="mt-6 space-y-3 text-left text-sm text-gray-600">
+                  {[
+                    "Unlimited AI trip plans",
+                    "Priority customer support",
+                    "Group & multi-city trips",
+                    "Restaurant reservations",
+                    "Exclusive hotel deals",
+                  ].map((feature) => (
+                    <li key={feature} className="flex items-center gap-2">
+                      <svg className="h-4 w-4 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="https://buy.stripe.com/aFa5kC7sf5r6ej27RX4F201"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-8 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-3.5 text-base font-bold text-white shadow-xl transition-all hover:from-amber-600 hover:to-orange-700 hover:shadow-2xl hover:scale-105 active:scale-95"
+                >
+                  Go Premium — $9.99/mo
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="bg-gradient-to-br from-indigo-600 to-purple-700 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">

@@ -346,6 +346,31 @@ function PlanPage() {
             </button>
           </div>
         </div>
+
+        {/* Premium Upsell Banner */}
+        <div className="mt-8 overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 shadow-lg">
+          <div className="flex flex-col items-center gap-4 p-6 sm:flex-row sm:justify-between sm:p-8">
+            <div className="flex items-center gap-4">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-2xl shadow-lg">
+                👑
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900">Go Premium</h3>
+                <p className="text-sm text-gray-600">
+                  Unlimited trip plans, priority support, and group booking features.
+                </p>
+              </div>
+            </div>
+            <a
+              href="https://buy.stripe.com/aFa5kC7sf5r6ej27RX4F201"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="whitespace-nowrap rounded-full bg-gradient-to-r from-amber-500 to-orange-600 px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:from-amber-600 hover:to-orange-700 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Go Premium — $9.99/mo
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -772,12 +772,25 @@ function ItineraryPage() {
 
         {/* Action Buttons */}
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            onClick={() => navigate({ to: "/plan" })}
-            className="cursor-pointer rounded-xl border-2 border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition-all hover:border-gray-300 hover:bg-gray-50"
-          >
-            ← Adjust Preferences
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <button
+              onClick={() => navigate({ to: "/plan" })}
+              className="cursor-pointer rounded-xl border-2 border-gray-200 bg-white px-6 py-3 text-sm font-semibold text-gray-700 transition-all hover:border-gray-300 hover:bg-gray-50"
+            >
+              ← Adjust Preferences
+            </button>
+            <a
+              href="https://buy.stripe.com/bJe9AS8wj3iYfn6egl4F200"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-emerald-200 bg-emerald-50 px-6 py-3 text-sm font-bold text-emerald-700 transition-all hover:bg-emerald-100 hover:border-emerald-300 hover:shadow-md"
+            >
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+              Buy This Trip Plan — $5
+            </a>
+          </div>
           <button
             onClick={() => setShowBooking(!showBooking)}
             className="cursor-pointer rounded-xl bg-gradient-to-r from-indigo-600 to-purple-700 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-500/25 transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
