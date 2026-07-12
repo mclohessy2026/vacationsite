@@ -1,6 +1,7 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useState, useEffect } from "react";
+import { generateItinerary as aiGenerateItinerary } from "~/ai-planner";
 
 interface ItinerarySearch {
   destination?: string;
@@ -446,7 +447,7 @@ function getCategoryColor(category: string): string {
   }
 }
 
-// Server function to generate itinerary
+// Server function to generate itinerary (uses AI if API key is set, falls back to mock)
 const generateItinerary = createServerFn({ method: "GET" })
   .validator((data: {
     destination: string;
@@ -459,85 +460,17 @@ const generateItinerary = createServerFn({ method: "GET" })
     interests: string;
   }) => data)
   .handler(async ({ data }) => {
-    // Simulate AI processing delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    const destination = data.destination;
-    const vibe = data.vibe || "mixed";
-    const budget = data.budget || "mid-range";
-    const pace = data.pace || "balanced";
-    const travelers = data.travelers || "solo";
-    const interests = data.interests ? data.interests.split(",") : ["food"];
-    const nights = getNights(data.startDate, data.endDate);
-    const days = nights + 1;
-
-    // Get mock data for this destination
-    const mockData = mocks[destination] || mocks["Las Vegas"];
-    const dayActivities = mockData.days[vibe] || mockData.days["mixed"] || defaultDays;
-
-    // Generate day-by-day itinerary
-    const dayPlans: DayPlan[] = [];
-    const budgetLabels: Record<string, string> = {
-      economy: "Budget-Friendly",
-      "mid-range": "Mid-Range",
-      luxury: "Premium",
-    };
-
-    const getActivityForDay = (day: number, slot: number) => {
-      const activities = dayActivities;
-      if (activities.length <= slot) return activities[activities.length - 1] || defaultDays[0];
-      return activities[slot];
-    };
-
-    for (let d = 0; d < days; d++) {
-      const activities: Activity[] = [];
-      const numActivities = pace === "packed" ? 5 : pace === "slow" ? 3 : 4;
-
-      for (let a = 0; a < numActivities; a++) {
-        const activityData = getActivityForDay(d % dayActivities.length, a % dayActivities.length);
-        if (activityData) {
-          activities.push({
-            time: activityData.time,
-            title: d === 0 && a === 0 ? `Arrival in ${destination}: ${activityData.title}` :
-                   d === days - 1 && a === numActivities - 1 ? `Departure: ${activityData.title}` :
-                   activityData.title,
-            description: activityData.desc || activityData.desc,
-            category: activityData.cat || "exploration",
-          });
-        }
-      }
-
-      dayPlans.push({
-        day: d + 1,
-        date: formatDate(data.startDate, d),
-        activities,
-      });
-    }
-
-    // Select hotel based on budget
-    const hotelPrices: Record<string, number> = { economy: 2, "mid-range": 1, luxury: 0 };
-    const hotelIndex = hotelPrices[budget] ?? 1;
-
-    // Select flight based on budget
-    const flightPrices: Record<string, number> = { economy: 1, "mid-range": 0, luxury: 0 };
-    const flightIndex = flightPrices[budget] ?? 0;
-
-    const itinerary: ItineraryData = {
-      destination,
-      totalDays: days,
-      budget,
-      vibe,
-      pace,
-      travelers,
-      interests,
-      weather: mockData.weather,
-      hotel: mockData.hotels[hotelIndex] || mockData.hotels[0],
-      flight: mockData.flights[flightIndex] || mockData.flights[0],
-      dining: mockData.dining,
-      days: dayPlans,
-    };
-
-    return itinerary;
+    const result = await aiGenerateItinerary({
+      destination: data.destination,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      budget: data.budget || "mid-range",
+      vibe: data.vibe || "mixed",
+      pace: data.pace || "balanced",
+      travelers: data.travelers || "solo",
+      interests: data.interests ? data.interests.split(",") : ["food"],
+    });
+    return result;
   });
 
 export const Route = createFileRoute("/itinerary")({
