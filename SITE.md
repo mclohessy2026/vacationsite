@@ -54,7 +54,7 @@ team lead runs this flow and reports the live URL; don't hand-roll hosting or tu
 
 ## Making it dynamic
 
-The site is static today, but adding backend behavior is one file away — no second
+The  site is static today, but adding backend behavior is one file away — no second
 process, no extra port, all served on the same port 3000:
 
 - **Server function** — call server-only code (DB, secrets, fetch) directly from a
