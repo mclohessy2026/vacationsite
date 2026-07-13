@@ -6,7 +6,7 @@
  */
 
 // ---- Types (mirror the existing mock types) ----
-
+ 
 interface Flight {
   airline: string;
   departure: string;
