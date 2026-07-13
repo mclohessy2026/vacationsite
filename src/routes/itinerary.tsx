@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
 import { useState, useEffect } from "react";
 import { generateItinerary as aiGenerateItinerary } from "~/ai-planner";
 
@@ -447,32 +446,6 @@ function getCategoryColor(category: string): string {
   }
 }
 
-// Server function to generate itinerary (uses AI if API key is set, falls back to mock)
-const generateItinerary = createServerFn({ method: "GET" })
-  .validator((data: {
-    destination: string;
-    startDate: string;
-    endDate: string;
-    budget: string;
-    vibe: string;
-    pace: string;
-    travelers: string;
-    interests: string;
-  }) => data)
-  .handler(async ({ data }) => {
-    const result = await aiGenerateItinerary({
-      destination: data.destination,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      budget: data.budget || "mid-range",
-      vibe: data.vibe || "mixed",
-      pace: data.pace || "balanced",
-      travelers: data.travelers || "solo",
-      interests: data.interests ? data.interests.split(",") : ["food"],
-    });
-    return result;
-  });
-
 export const Route = createFileRoute("/itinerary")({
   validateSearch: (search: Record<string, unknown>): ItinerarySearch => ({
     destination: typeof search.destination === "string" ? search.destination : "",
@@ -499,15 +472,15 @@ function ItineraryPage() {
     async function load() {
       setLoading(true);
       try {
-        const result = await generateItinerary({
-          destination: search.destination,
-          startDate: search.startDate,
-          endDate: search.endDate,
-          budget: search.budget,
-          vibe: search.vibe,
-          pace: search.pace,
-          travelers: search.travelers,
-          interests: search.interests,
+        const result = await aiGenerateItinerary({
+          destination: search.destination || "New York",
+          startDate: search.startDate || "",
+          endDate: search.endDate || "",
+          budget: search.budget || "mid-range",
+          vibe: search.vibe || "mixed",
+          pace: search.pace || "balanced",
+          travelers: search.travelers || "solo",
+          interests: search.interests ? search.interests.split(",") : ["food"],
         });
         setItinerary(result);
       } catch (e) {
