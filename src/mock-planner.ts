@@ -1,5 +1,5 @@
 /**
- * VoyageAI — Mock itinerary generator (fallback when no AI is available).
+ * VacationHubs — Mock itinerary generator (fallback when no AI is available).
  * Extracted from the original itinerary.tsx mock data.
  */
 

@@ -75,7 +75,7 @@ function Home() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-indigo-200 sm:text-xl">
             Answer a few quick questions about your budget, vibe, and interests.
-            VoyageAI crafts a complete, bookable itinerary — flights, hotels,
+            VacationHubs crafts a complete, bookable itinerary — flights, hotels,
             activities, and dining — all in one go.
           </p>
 
@@ -243,7 +243,7 @@ function Home() {
                 AI crafts your itinerary
               </h3>
               <p className="mt-2 leading-relaxed text-gray-600">
-                VoyageAI generates a complete day-by-day plan — flights, hotels,
+                VacationHubs generates a complete day-by-day plan — flights, hotels,
                 restaurants, and activities — tailored to your preferences.
               </p>
             </div>
@@ -388,7 +388,7 @@ function Home() {
             Ready to plan your next adventure?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-indigo-100">
-            Stop researching. Start packing. VoyageAI handles the planning so
+            Stop researching. Start packing. VacationHubs handles the planning so
             you can focus on the experience.
           </p>
           <a

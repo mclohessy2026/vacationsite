@@ -11,13 +11,13 @@ function AboutPage() {
       <section className="bg-gradient-to-br from-indigo-950 via-indigo-900 to-purple-900 px-4 py-20 text-center text-white">
         <div className="mx-auto max-w-3xl">
           <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-sm font-semibold text-indigo-200 backdrop-blur-sm">
-            About VoyageAI
+            About VacationHubs
           </span>
           <h1 className="mt-4 text-balance text-4xl font-extrabold tracking-tight sm:text-5xl">
             Planning your trip should be <span className="text-indigo-300">exciting</span>, not exhausting
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-indigo-200">
-            We built VoyageAI because we love to travel — but we hate planning. The tabs, the
+            We built VacationHubs because we love to travel — but we hate planning. The tabs, the
             spreadsheets, the "what if I pick the wrong hotel?" anxiety. So we fixed it.
           </p>
         </div>
@@ -37,7 +37,7 @@ function AboutPage() {
                 dozens of tabs, conflicting reviews, and fear of missing out on the "perfect" option.
               </p>
               <p className="mt-4 leading-relaxed text-gray-600">
-                VoyageAI replaces all of that with a single conversation. Tell us where, when, and
+                VacationHubs replaces all of that with a single conversation. Tell us where, when, and
                 what you love — we handle the rest. Our AI crafts a complete, personalized itinerary
                 that you can book in one place. No research, no coordination, no overwhelm.
               </p>
@@ -69,7 +69,7 @@ function AboutPage() {
       <section className="bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-center text-3xl font-bold text-gray-900 sm:text-4xl">
-            How VoyageAI works
+            How VacationHubs works
           </h2>
           <div className="mt-12 space-y-8">
             {[
@@ -145,7 +145,7 @@ function AboutPage() {
             Ready to plan your next adventure?
           </h2>
           <p className="mt-4 text-lg text-indigo-100">
-            Skip the research. Let VoyageAI build your perfect trip.
+            Skip the research. Let VacationHubs build your perfect trip.
           </p>
           <a
             href="/plan"

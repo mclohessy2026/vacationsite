@@ -1,5 +1,5 @@
 /**
- * VoyageAI database setup script.
+ * VacationHubs database setup script.
  *
  * Reads schema.sql and executes it against the database specified by
  * DATABASE_URL. Run with: bun run db:setup
@@ -72,7 +72,7 @@ async function main() {
   }
 
   console.log(`  ✅ Schema applied (${successCount} of ${rawStatements.length} statements).`);
-  console.log("  🚀 Database is ready for VoyageAI.");
+  console.log("  🚀 Database is ready for VacationHubs.");
 }
 
 main().catch((err) => {

@@ -1,5 +1,5 @@
 /**
- * VoyageAI — Real AI trip planner using OpenAI.
+ * VacationHubs — Real AI trip planner using OpenAI.
  *
  * Server-only module. Falls back to mock data when OPENAI_API_KEY is not set.
  * OpenAI is imported lazily to avoid bundle failures in constrained environments.
@@ -94,7 +94,7 @@ export async function generateItinerary(input: PlanInput): Promise<ItineraryData
         {
           role: "system",
           content:
-            "You are VoyageAI, a travel planning assistant. Generate a detailed day-by-day trip itinerary as valid JSON. " +
+            "You are VacationHubs, a travel planning assistant. Generate a detailed day-by-day trip itinerary as valid JSON. " +
             "Output ONLY the JSON object with no markdown, no explanation, no code fences.",
         },
         { role: "user", content: prompt },

@@ -536,7 +536,7 @@ function ItineraryPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Crafting your perfect trip...</h2>
           <p className="mt-2 text-gray-600">
-            VoyageAI is analyzing your preferences and building a personalized itinerary
+            VacationHubs is analyzing your preferences and building a personalized itinerary
           </p>
           <div className="mt-8 flex gap-2">
             <div className="h-2 w-2 animate-bounce rounded-full bg-indigo-500" style={{ animationDelay: "0ms" }} />

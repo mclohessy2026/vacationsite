@@ -13,11 +13,11 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "VoyageAI — AI-Powered Trip Planning" },
+      { title: "VacationHubs — AI-Powered Trip Planning" },
       {
         name: "description",
         content:
-          "Tell VoyageAI where and when you want to go, and it plans the entire trip for you. No research, no coordination, no overwhelm.",
+          "Tell VacationHubs where and when you want to go, and it plans the entire trip for you. No research, no coordination, no overwhelm.",
       },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -76,7 +76,7 @@ function Nav() {
           >
             <path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm6.75 11.5c0 3.452-2.798 6.25-6.25 6.25s-6.25-2.798-6.25-6.25S13.048 9.25 16 9.25s6.25 2.798 6.25 6.25zM16 24c-2.28 0-4.38-.76-6.05-2.03l1.42-1.42A6.95 6.95 0 0016 22a6.95 6.95 0 004.63-1.45l1.42 1.42A9.93 9.93 0 0116 24z" />
           </svg>
-          VoyageAI
+          VacationHubs
         </a>
         <nav className="hidden items-center gap-8 sm:flex">
           <a
@@ -122,10 +122,10 @@ function Footer() {
             >
               <path d="M16 2C8.268 2 2 8.268 2 16s6.268 14 14 14 14-6.268 14-14S23.732 2 16 2zm6.75 11.5c0 3.452-2.798 6.25-6.25 6.25s-6.25-2.798-6.25-6.25S13.048 9.25 16 9.25s6.25 2.798 6.25 6.25zM16 24c-2.28 0-4.38-.76-6.05-2.03l1.42-1.42A6.95 6.95 0 0016 22a6.95 6.95 0 004.63-1.45l1.42 1.42A9.93 9.93 0 0116 24z" />
             </svg>
-            VoyageAI
+            VacationHubs
           </div>
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} VoyageAI. All rights reserved.
+            &copy; {new Date().getFullYear()} VacationHubs. All rights reserved.
           </p>
         </div>
       </div>
