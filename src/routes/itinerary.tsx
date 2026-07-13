@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { generateItinerary as aiGenerateItinerary } from "~/ai-planner";
+import { generateItinerary as generateAIItinerary } from "~/ai-planner";
 
 interface ItinerarySearch {
   destination?: string;
@@ -472,7 +472,7 @@ function ItineraryPage() {
     async function load() {
       setLoading(true);
       try {
-        const result = await aiGenerateItinerary({
+        const result = await generateAIItinerary({
           destination: search.destination || "New York",
           startDate: search.startDate || "",
           endDate: search.endDate || "",
