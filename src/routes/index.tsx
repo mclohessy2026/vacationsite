@@ -12,6 +12,13 @@ const destinations = [
   { city: "Orlando", state: "FL", tag: "Theme Park Paradise" },
   { city: "San Francisco", state: "CA", tag: "Golden Gate City" },
   { city: "Chicago", state: "IL", tag: "The Windy City" },
+  { city: "Miami", state: "FL", tag: "Beach & Nightlife Hub" },
+  { city: "Los Angeles", state: "CA", tag: "City of Stars" },
+  { city: "Seattle", state: "WA", tag: "Emerald City" },
+  { city: "Denver", state: "CO", tag: "Mile High Adventure" },
+  { city: "Boston", state: "MA", tag: "Historic Charm" },
+  { city: "Austin", state: "TX", tag: "Live Music Capital" },
+  { city: "New Orleans", state: "LA", tag: "The Big Easy" },
 ];
 
 function Home() {

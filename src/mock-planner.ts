@@ -168,7 +168,10 @@ const mockDB: Record<string, any> = {
 };
 
 // Also add Nashville, Orlando, San Francisco, Chicago with simpler data
-const extraDestinations = ["Nashville", "Orlando", "San Francisco", "Chicago"];
+const extraDestinations = [
+  "Nashville", "Orlando", "San Francisco", "Chicago",
+  "Miami", "Los Angeles", "Seattle", "Denver", "Boston", "Austin", "New Orleans",
+];
 for (const dest of extraDestinations) {
   if (!mockDB[dest]) {
     mockDB[dest] = {
@@ -181,7 +184,7 @@ for (const dest of extraDestinations) {
         { airline: "Major Airlines", departure: "07:30 AM", arrival: "09:45 AM", duration: "2h 15m", price: "$179" },
       ],
       dining: [
-        { name: `${dest} Bistro`, cuisine: "American", meal: "Dinner", price: "$$" },
+        { name: `${dest} Bistro`, cuisine: "American", meal: "Dinner", price: "$" },
         { name: `${dest} Cafe`, cuisine: "Cafe", meal: "Breakfast", price: "$" },
       ],
       days: {
