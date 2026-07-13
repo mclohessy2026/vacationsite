@@ -74,64 +74,8 @@ import { generateMockItinerary } from "./mock-planner";
 // ---- AI Planner ----
 
 export async function generateItinerary(input: PlanInput): Promise<ItineraryData> {
-  const apiKey = process.env.OPENAI_API_KEY;
-
-  // Fall back to mock data if no API key
-  if (!apiKey || apiKey.startsWith("sk-proj-") === false) {
-    console.log("No OPENAI_API_KEY set — using mock data");
-    return generateMockItinerary(input);
-  }
-
-  try {
-        const { default: OpenAI } = await import("openai");
-        const openai = new OpenAI({ apiKey });
-
-        const prompt = buildPrompt(input);
-
-        const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are VacationHubs, a travel planning assistant. Generate a detailed day-by-day trip itinerary as valid JSON. " +
-            "Output ONLY the JSON object with no markdown, no explanation, no code fences.",
-        },
-        { role: "user", content: prompt },
-      ],
-      temperature: 0.7,
-      max_tokens: 3000,
-    });
-
-    const content = response.choices[0]?.message?.content;
-    if (!content) throw new Error("No content in OpenAI response");
-
-    // Parse the JSON response
-    const cleaned = content
-      .replace(/^```(?:json)?\s*/i, "")
-      .replace(/\s*```$/i, "")
-      .trim();
-
-    const parsed = JSON.parse(cleaned);
-
-    return {
-      destination: input.destination,
-      totalDays: parsed.totalDays ?? getDays(input.startDate, input.endDate),
-      budget: input.budget,
-      vibe: input.vibe,
-      pace: input.pace,
-      travelers: input.travelers,
-      interests: input.interests,
-      weather: parsed.weather ?? "Pleasant weather expected",
-      hotel: parsed.hotel ?? { name: "TBD", stars: 3, price: "TBD", description: "Check back for details" },
-      flight: parsed.flight ?? { airline: "TBD", departure: "TBD", arrival: "TBD", duration: "TBD", price: "TBD" },
-      dining: parsed.dining ?? [],
-      days: parsed.days ?? [],
-    };
-  } catch (err) {
-    console.error("AI planner error, falling back to mock:", err);
-    return generateMockItinerary(input);
-  }
+  // Using mock itinerary data for now — real OpenAI integration can be enabled later
+  return generateMockItinerary(input);
 }
 
 function getDays(start: string, end: string): number {
