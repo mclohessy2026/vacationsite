@@ -2,8 +2,8 @@
  * VoyageAI — Real AI trip planner using OpenAI.
  *
  * Server-only module. Falls back to mock data when OPENAI_API_KEY is not set.
+ * OpenAI is imported lazily to avoid bundle failures in constrained environments.
  */
-import OpenAI from "openai";
 
 // ---- Types (mirror the existing mock types) ----
 
@@ -83,11 +83,12 @@ export async function generateItinerary(input: PlanInput): Promise<ItineraryData
   }
 
   try {
-    const openai = new OpenAI({ apiKey });
+        const { default: OpenAI } = await import("openai");
+        const openai = new OpenAI({ apiKey });
 
-    const prompt = buildPrompt(input);
+        const prompt = buildPrompt(input);
 
-    const response = await openai.chat.completions.create({
+        const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
         {
