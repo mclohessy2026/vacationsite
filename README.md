@@ -9,4 +9,4 @@ bun install
 bun run dev
 ```
 
-Built with TanStack Start + React + TypeScript + Tailwind CSS..
+Built with TanStack Start + React + TypeScript + Tailwind CSS.. 
