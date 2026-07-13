@@ -22,15 +22,32 @@ mkdir -p .vercel/output/functions/render.func
 cp -R dist/client .vercel/output/static
 rm -f .vercel/output/static/index.html   # SSR owns "/", not a static shell
 
-echo "[3/3] bundle SSR handler + deps into the render function"
+echo "[3/4] bundle SSR handler + deps into the render function"
 bun build vercel-entry.ts --target node \
   --outfile .vercel/output/functions/render.func/index.mjs
 
 cat > .vercel/output/functions/render.func/.vc-config.json <<'JSON'
 { "runtime": "nodejs22.x", "handler": "index.mjs", "launcherType": "Nodejs", "supportsResponseStreaming": true }
 JSON
+
+echo "[4/4] bundle API handler as a separate serverless function"
+mkdir -p .vercel/output/functions/api.func
+bun build api-handler.ts --target node \
+  --outfile .vercel/output/functions/api.func/index.mjs
+
+cat > .vercel/output/functions/api.func/.vc-config.json <<'JSON'
+{ "runtime": "nodejs22.x", "handler": "index.mjs", "launcherType": "Nodejs" }
+JSON
+
 cat > .vercel/output/config.json <<'JSON'
-{ "version": 3, "routes": [ { "handle": "filesystem" }, { "src": "/(.*)", "dest": "/render" } ] }
+{
+  "version": 3,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/api/plan-trip", "dest": "/api" },
+    { "src": "/(.*)", "dest": "/render" }
+  ]
+}
 JSON
 
 echo "done -> .vercel/output ready for: bunx vercel deploy --prebuilt"

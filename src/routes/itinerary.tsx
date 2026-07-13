@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { generateItinerary } from "~/ai-planner";
 
 interface ItinerarySearch {
   destination?: string;
@@ -473,19 +472,47 @@ function ItineraryPage() {
     async function load() {
       setLoading(true);
       try {
-        const result = await generateItinerary({
-          destination: search.destination || "New York",
-          startDate: search.startDate || "",
-          endDate: search.endDate || "",
-          budget: search.budget || "mid-range",
-          vibe: search.vibe || "mixed",
-          pace: search.pace || "balanced",
-          travelers: search.travelers || "solo",
-          interests: search.interests ? search.interests.split(",").filter(Boolean) : ["food"],
+        // Try the server API first (calls OpenAI)
+        const res = await fetch("/api/plan-trip", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            destination: search.destination || "New York",
+            startDate: search.startDate || "",
+            endDate: search.endDate || "",
+            budget: search.budget || "mid-range",
+            vibe: search.vibe || "mixed",
+            pace: search.pace || "balanced",
+            travelers: search.travelers || "solo",
+            interests: search.interests ? search.interests.split(",").filter(Boolean) : ["food"],
+          }),
         });
-        setItinerary(result);
+
+        if (res.ok) {
+          const data = await res.json();
+          setItinerary(data);
+        } else {
+          throw new Error("API returned " + res.status);
+        }
       } catch (e) {
-        console.error("Failed to generate itinerary", e);
+        console.error("API failed, using local mock:", e);
+        // Fallback to local mock
+        try {
+          const { generateItinerary } = await import("~/ai-planner");
+          const result = await generateItinerary({
+            destination: search.destination || "New York",
+            startDate: search.startDate || "",
+            endDate: search.endDate || "",
+            budget: search.budget || "mid-range",
+            vibe: search.vibe || "mixed",
+            pace: search.pace || "balanced",
+            travelers: search.travelers || "solo",
+            interests: search.interests ? search.interests.split(",").filter(Boolean) : ["food"],
+          });
+          setItinerary(result);
+        } catch (e2) {
+          console.error("Mock also failed:", e2);
+        }
       } finally {
         setLoading(false);
       }
