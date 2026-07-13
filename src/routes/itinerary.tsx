@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, useSearch } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 import { useState, useEffect } from "react";
-import { generateItinerary as generateAIItinerary } from "~/ai-planner";
+import { generateItinerary as aiGenerateItinerary } from "~/ai-planner";
 
 interface ItinerarySearch {
   destination?: string;
@@ -446,6 +447,32 @@ function getCategoryColor(category: string): string {
   }
 }
 
+// Server function — runs server-side where OPENAI_API_KEY is available
+const getItinerary = createServerFn({ method: "GET" })
+  .validator((d: {
+    destination: string;
+    startDate: string;
+    endDate: string;
+    budget: string;
+    vibe: string;
+    pace: string;
+    travelers: string;
+    interests: string;
+  }) => d)
+  .handler(async ({ data }) => {
+    const result = await aiGenerateItinerary({
+      destination: data.destination || "New York",
+      startDate: data.startDate || "",
+      endDate: data.endDate || "",
+      budget: data.budget || "mid-range",
+      vibe: data.vibe || "mixed",
+      pace: data.pace || "balanced",
+      travelers: data.travelers || "solo",
+      interests: data.interests ? data.interests.split(",").filter(Boolean) : ["food"],
+    });
+    return result;
+  });
+
 export const Route = createFileRoute("/itinerary")({
   validateSearch: (search: Record<string, unknown>): ItinerarySearch => ({
     destination: typeof search.destination === "string" ? search.destination : "",
@@ -472,7 +499,7 @@ function ItineraryPage() {
     async function load() {
       setLoading(true);
       try {
-        const result = await generateAIItinerary({
+        const result = await getItinerary({
           destination: search.destination || "New York",
           startDate: search.startDate || "",
           endDate: search.endDate || "",
@@ -480,7 +507,7 @@ function ItineraryPage() {
           vibe: search.vibe || "mixed",
           pace: search.pace || "balanced",
           travelers: search.travelers || "solo",
-          interests: search.interests ? search.interests.split(",") : ["food"],
+          interests: search.interests || "food",
         });
         setItinerary(result);
       } catch (e) {
