@@ -101,12 +101,15 @@ function Home() {
                   className="w-full rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-white placeholder-indigo-300/60 backdrop-blur-sm transition-colors focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/30"
                 />
                 {showDropdown && destination && filteredDestinations.length > 0 && (
-                  <div className="absolute left-0 right-0 top-full z-10 mt-1 overflow-hidden rounded-xl border border-white/10 bg-gray-900 shadow-xl backdrop-blur-xl">
+                  <div className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-xl border border-white/10 bg-gray-900 shadow-xl backdrop-blur-xl">
                     {filteredDestinations.map((d) => (
                       <button
                         key={d.city}
-                        onMouseDown={() => handleSelectDestination(d.city)}
-                        className="flex w-full items-center gap-3 px-4 py-3 text-left text-white transition-colors hover:bg-white/10"
+                        onMouseDown={(e) => {
+                          e.preventDefault();
+                          handleSelectDestination(d.city);
+                        }}
+                        className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left text-white transition-colors hover:bg-white/10"
                       >
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/20 text-sm font-bold text-indigo-300">
                           {d.city[0]}
