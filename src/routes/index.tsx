@@ -392,7 +392,7 @@ function Home() {
             you can focus on the experience.
           </p>
           <a
-            href="/plan"
+            href="/"
             className="mt-8 inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-8 py-3.5 text-base font-bold text-indigo-700 shadow-xl transition-all hover:bg-indigo-50 hover:shadow-2xl hover:scale-105 active:scale-95"
           >
             Plan Your Trip Free

@@ -99,7 +99,7 @@ function Nav() {
           </a>
         </nav>
         <a
-          href="/plan"
+          href="/"
           className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-indigo-700 hover:shadow-lg"
         >
           Get Started
