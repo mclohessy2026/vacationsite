@@ -45,7 +45,7 @@ cat > .vercel/output/config.json <<'JSON'
   "routes": [
     { "handle": "filesystem" },
     { "src": "/api/plan-trip", "dest": "/api" },
-    { "src": "/(.*)", "dest": "/render" }
+    { "src": "/(.*)", "dest": "/render", "check": true }
   ]
 }
 JSON

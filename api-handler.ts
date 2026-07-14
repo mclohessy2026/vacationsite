@@ -1,7 +1,12 @@
 /**
  * VacationHubs API endpoint — generates trip itineraries via OpenAI.
  * Deployed as a separate serverless function alongside the main app.
+ *
+ * The default export is a Node.js (req, res) handler for the Vercel Build Output
+ * API v3 "Nodejs" launcher. Internally it adapts to web Request/Response via the
+ * same pattern used by vercel-entry.ts.
  */
+import type { IncomingMessage, ServerResponse } from "node:http";
 import type { ItineraryData } from "../src/ai-planner";
 
 interface PlanInput {
@@ -86,7 +91,9 @@ function buildMock(input: PlanInput): ItineraryData {
   };
 }
 
-export default async function handler(req: Request): Promise<Response> {
+// ---- Web fetch handler (core logic) ----
+
+async function webHandler(req: Request): Promise<Response> {
   const headers = { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" };
 
   if (req.method !== "POST") {
@@ -145,5 +152,52 @@ export default async function handler(req: Request): Promise<Response> {
     return new Response(JSON.stringify(buildMock(input)), { status: 200, headers });
   } catch (e: any) {
     return new Response(JSON.stringify({ error: e.message }), { status: 500, headers });
+  }
+}
+
+// ---- Node.js adapter (for Vercel "Nodejs" launcher) ----
+
+/** Convert a Node IncomingMessage into a web Request (same pattern as vercel-entry.ts). */
+function toWebRequest(req: IncomingMessage): Request {
+  const host = req.headers.host ?? "localhost";
+  const proto = (req.headers["x-forwarded-proto"] as string | undefined) ?? "https";
+  const url = `${proto}://${host}${req.url ?? "/"}`;
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers)) {
+    if (Array.isArray(value)) for (const v of value) headers.append(key, v);
+    else if (value != null) headers.set(key, value);
+  }
+  const method = req.method ?? "GET";
+  const hasBody = method !== "GET" && method !== "HEAD";
+  return new Request(url, {
+    method,
+    headers,
+    ...(hasBody ? { body: req as unknown as ReadableStream, duplex: "half" } : {}),
+  } as RequestInit);
+}
+
+/** Default export: Node.js (req, res) handler expected by Vercel's "Nodejs" launcher. */
+export default async function nodeHandler(
+  req: IncomingMessage,
+  res: ServerResponse,
+): Promise<void> {
+  try {
+    const webRes = await webHandler(toWebRequest(req));
+    res.statusCode = webRes.status;
+    webRes.headers.forEach((value, key) => res.setHeader(key, value));
+    if (webRes.body) {
+      const reader = webRes.body.getReader();
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        res.write(value);
+      }
+    }
+    res.end();
+  } catch (error) {
+    console.error("[api-handler] request failed", error);
+    res.statusCode = 500;
+    res.setHeader("content-type", "application/json");
+    res.end(JSON.stringify({ error: "Internal Server Error" }));
   }
 }
