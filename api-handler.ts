@@ -173,7 +173,7 @@ function toWebRequest(req: IncomingMessage): Request {
   return new Request(url, {
     method,
     headers,
-       ...(hasBody ? { body: Readable.toWeb(req) as ReadableStream, duplex: "half" } : {}),
+      ...(hasBody ? { body: Readable.toWeb(req) as ReadableStream, duplex: "half" } : {}),
   } as RequestInit);
 }
 
