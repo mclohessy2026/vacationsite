@@ -7,6 +7,7 @@
  * same pattern used by vercel-entry.ts.
  */
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { Readable } from "node:stream";
 import type { ItineraryData } from "../src/ai-planner";
 
 interface PlanInput {
@@ -172,7 +173,7 @@ function toWebRequest(req: IncomingMessage): Request {
   return new Request(url, {
     method,
     headers,
-    ...(hasBody ? { body: req as unknown as ReadableStream, duplex: "half" } : {}),
+    ...(hasBody ? { body: Readable.toWeb(req) as ReadableStream, duplex: "half" } : {}),
   } as RequestInit);
 }
 

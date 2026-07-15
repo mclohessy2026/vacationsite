@@ -9,6 +9,7 @@
 // Bundled (with its deps + the SSR handler's dynamic ./assets chunks) into
 // .vercel/output/functions/render.func/index.mjs by build-vercel.sh.
 import type { IncomingMessage, ServerResponse } from "node:http";
+import { Readable } from "node:stream";
 
 import handler from "./dist/server/server.js";
 
@@ -32,7 +33,7 @@ const toWebRequest = (req: IncomingMessage): Request => {
     method,
     headers,
     ...(hasBody
-      ? { body: req as unknown as ReadableStream, duplex: "half" }
+      ? { body: Readable.toWeb(req) as ReadableStream, duplex: "half" }
       : {}),
   } as RequestInit);
 };
