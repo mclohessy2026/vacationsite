@@ -158,7 +158,7 @@ function ItineraryPage() {
         const res = await fetch("/api/plan-trip", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          signal: AbortSignal.timeout(5000), // 5s timeout — fall back to mock quickly
+          signal: AbortSignal.timeout(30000), // 5s timeout — fall back to mock quickly
           body: JSON.stringify({
             destination: search.destination || "New York",
             startDate: search.startDate || "",
